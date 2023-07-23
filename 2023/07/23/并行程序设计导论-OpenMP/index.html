@@ -4,17 +4,19 @@
   <meta charset="utf-8">
   
   
-  <title>ShuiYaolu</title>
+  <title>并行程序设计导论|OpenMP在并行构造中的运用 | ShuiYaolu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="笔记">
-<meta property="og:type" content="website">
-<meta property="og:title" content="ShuiYaolu">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="一、OpenMP在并行构造中的运用1.常用指令详解及部分代码展示（了解for循环并行、功能并行与single的概念和使用）（1）for循环并行a.指令for表示接下来的循环被并行执行(必须被parall初始化，否则仍为串行)b.利用paral指令将N次循环置于并行区域内c.利用for指令将N次循环进行任务分配d.每个线程各自负责其中一部分循环工作，需要保证循环之间数据的独立性。e.collapse">
+<meta property="og:type" content="article">
+<meta property="og:title" content="并行程序设计导论|OpenMP在并行构造中的运用">
+<meta property="og:url" content="http://example.com/2023/07/23/%E5%B9%B6%E8%A1%8C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AF%BC%E8%AE%BA-OpenMP/index.html">
 <meta property="og:site_name" content="ShuiYaolu">
-<meta property="og:description" content="笔记">
+<meta property="og:description" content="一、OpenMP在并行构造中的运用1.常用指令详解及部分代码展示（了解for循环并行、功能并行与single的概念和使用）（1）for循环并行a.指令for表示接下来的循环被并行执行(必须被parall初始化，否则仍为串行)b.利用paral指令将N次循环置于并行区域内c.利用for指令将N次循环进行任务分配d.每个线程各自负责其中一部分循环工作，需要保证循环之间数据的独立性。e.collapse">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-23T07:31:58.000Z">
+<meta property="article:modified_time" content="2023-07-23T08:18:52.264Z">
 <meta property="article:author" content="ShuiYaolu">
-<meta property="article:tag" content="随笔">
+<meta property="article:tag" content="并行程序设计导论">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="ShuiYaolu" type="application/atom+xml">
@@ -78,9 +80,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-并行程序设计导论-OpenMP" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-并行程序设计导论-OpenMP" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/07/23/%E5%B9%B6%E8%A1%8C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AF%BC%E8%AE%BA-OpenMP/" class="article-date">
   <time class="dt-published" datetime="2023-07-23T07:31:58.000Z" itemprop="datePublished">2023-07-23</time>
@@ -93,8 +93,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/07/23/%E5%B9%B6%E8%A1%8C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AF%BC%E8%AE%BA-OpenMP/">并行程序设计导论|OpenMP在并行构造中的运用</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      并行程序设计导论|OpenMP在并行构造中的运用
     </h1>
   
 
@@ -129,108 +129,19 @@
     </footer>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-目录" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/07/23/%E7%9B%AE%E5%BD%95/" class="article-date">
-  <time class="dt-published" datetime="2023-07-23T04:27:35.000Z" itemprop="datePublished">2023-07-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/07/23/%E7%9B%AE%E5%BD%95/">目录</a>
-    </h1>
+    <a href="/2023/07/23/%E7%9B%AE%E5%BD%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">目录</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2Fe93b2116-ce65-4bce-b2ee-7ab046b9be62%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1692681433&t=6360951bf6cc91b42b5ffafcbf2139d4"> </p>
-<p>哈喽，大家好ovo<br>我是税瑶璐，目前就读于西南石油大学，是学校超算与并行计算实验室的成员。</p>
-<p>本博客用于记录个人学习超算时的笔记以及收获<br>&lt;资料仅用于个人，不支持转载&gt;</p>
-<p>1.《计算机组成原理》</p>
-<p>2.《并行程序设计导论》</p>
-<p>3.《数据结构与算法》</p>
-<p>4.《力扣每日一题》</p>
-<p>(有补充内容后期会增加……) </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/07/23/%E7%9B%AE%E5%BD%95/" data-id="clkeynh6y0000msja0tnfbm0z" data-title="目录" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/07/23/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2023-07-23T03:18:38.639Z" itemprop="datePublished">2023-07-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/07/23/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/07/23/hello-world/" data-id="clkevfscz00006sja944jal61" data-title="Hello World" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
 </section>
