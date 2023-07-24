@@ -13,30 +13,30 @@
 <meta property="og:site_name" content="ShuiYaolu">
 <meta property="og:description" content="一、梯形积分法的并行化（了解程序中openmp的基本写法） 梯形积分法：梯形法则是采用梯形来估计曲线下方面积， 这等同将被积函数近似为直线函数，被积的部分近似为梯形，要求得较准确的数值，可以将要求积的区间分成多个小区间。 计算步骤：求出单个的面积+将所有的面积求和 可调整参数：梯形个数+线程数量 代码展示：  二、蒙特卡洛法进行π值估计（实际观察openmp不同参数） 一个正方形内部相切一个圆，圆">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img.png">
-<meta property="og:image" content="http://example.com/img_1.png">
-<meta property="og:image" content="http://example.com/img_2.png">
-<meta property="og:image" content="http://example.com/img_3.png">
-<meta property="og:image" content="http://example.com/img_4.png">
-<meta property="og:image" content="http://example.com/img_5.png">
-<meta property="og:image" content="http://example.com/img_6.png">
-<meta property="og:image" content="http://example.com/img_7.png">
-<meta property="og:image" content="http://example.com/img_8.png">
-<meta property="og:image" content="http://example.com/img_9.png">
-<meta property="og:image" content="http://example.com/img_10.png">
-<meta property="og:image" content="http://example.com/img_11.png">
-<meta property="og:image" content="http://example.com/img_12.png">
-<meta property="og:image" content="http://example.com/img_13.png">
-<meta property="og:image" content="http://example.com/img_14.png">
-<meta property="og:image" content="http://example.com/img_15.png">
-<meta property="og:image" content="http://example.com/img_16.png">
-<meta property="og:image" content="http://example.com/img_17.png">
+<meta property="og:image" content="https://i.postimg.cc/446gx9BM/img.png">
+<meta property="og:image" content="https://i.postimg.cc/0Qby4dmr/img-1.png">
+<meta property="og:image" content="https://i.postimg.cc/qR854W2F/img-2.png">
+<meta property="og:image" content="https://i.postimg.cc/XJ0sHxtk/img-3.png">
+<meta property="og:image" content="https://i.postimg.cc/NGDdD6DR/img-4.png">
+<meta property="og:image" content="https://i.postimg.cc/zXP0Zq9B/img-5.png">
+<meta property="og:image" content="https://i.postimg.cc/pLhkPgHB/img-6.png">
+<meta property="og:image" content="https://i.postimg.cc/L8cD5N4F/img-7.png">
+<meta property="og:image" content="https://i.postimg.cc/gjtqWKt5/img-8.png">
+<meta property="og:image" content="https://i.postimg.cc/85HmyGRT/img-9.png">
+<meta property="og:image" content="https://i.postimg.cc/V61FBvb7/img-10.png">
+<meta property="og:image" content="https://i.postimg.cc/mkgNJnjC/img-11.png">
+<meta property="og:image" content="https://i.postimg.cc/43p59Vn7/img-12.png">
+<meta property="og:image" content="https://i.postimg.cc/v80vfQ8z/img-13.png">
+<meta property="og:image" content="https://i.postimg.cc/bNd9RKsj/img-14.png">
+<meta property="og:image" content="https://i.postimg.cc/LsFk25vH/img-15.png">
+<meta property="og:image" content="https://i.postimg.cc/jS76pPHg/img-16.png">
+<meta property="og:image" content="https://i.postimg.cc/RV8QpXHJ/img-17.png">
 <meta property="article:published_time" content="2023-07-24T07:23:05.000Z">
-<meta property="article:modified_time" content="2023-07-24T08:45:17.792Z">
+<meta property="article:modified_time" content="2023-07-24T09:18:35.517Z">
 <meta property="article:author" content="ShuiYaolu">
 <meta property="article:tag" content="并行程序设计导论">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/img.png">
+<meta name="twitter:image" content="https://i.postimg.cc/446gx9BM/img.png">
   
     <link rel="alternate" href="/atom.xml" title="ShuiYaolu" type="application/atom+xml">
   
@@ -125,39 +125,39 @@
 <li>梯形积分法：梯形法则是采用梯形来估计曲线下方面积， 这等同将被积函数近似为直线函数，被积的部分近似为梯形，要求得较准确的数值，可以将要求积的区间分成多个小区间。</li>
 <li>计算步骤：求出单个的面积+将所有的面积求和</li>
 <li>可调整参数：梯形个数+线程数量</li>
-<li>代码展示：<br><img src="/img.png" alt="img.png"></li>
+<li>代码展示：<br><img src="https://i.postimg.cc/446gx9BM/img.png"></li>
 </ol>
 <h2 id="二、蒙特卡洛法进行π值估计"><a href="#二、蒙特卡洛法进行π值估计" class="headerlink" title="二、蒙特卡洛法进行π值估计"></a>二、蒙特卡洛法进行π值估计</h2><h3 id="（实际观察openmp不同参数）"><a href="#（实际观察openmp不同参数）" class="headerlink" title="（实际观察openmp不同参数）"></a>（实际观察openmp不同参数）</h3><ol>
 <li>一个正方形内部相切一个圆，圆和正方形的面积之比是π&#x2F;4。在这个正方形内部，随机产生n个点（这些点服从均匀分布），计算它们与中心点的距离是否大于圆的半径，以此判断是否落在圆的内部。统计圆内的点数，与n的比值乘以4，就是π的值。理论上，n越大，计算的π值越准。</li>
-<li>代码展示<br><img src="/img_1.png" alt="img_1.png"><br>解析：私有化部分变量后会使数据跑的更快，因为不会由于调用而产生数据竞争。</li>
+<li>代码展示<br><img src="https://i.postimg.cc/0Qby4dmr/img-1.png"><br><br>解析：私有化部分变量后会使数据跑的更快，因为不会由于调用而产生数据竞争。</li>
 </ol>
 <h2 id="三、调度子句schedule"><a href="#三、调度子句schedule" class="headerlink" title="三、调度子句schedule"></a>三、调度子句schedule</h2><h3 id="（熟悉static、dynamic、guided等调度类型的使用）"><a href="#（熟悉static、dynamic、guided等调度类型的使用）" class="headerlink" title="（熟悉static、dynamic、guided等调度类型的使用）"></a>（熟悉static、dynamic、guided等调度类型的使用）</h3><ol>
 <li>调度：将循环分配给线程。<br><br>调度影响因素：任务的均衡&amp;&amp;循环体内数据访问顺序与相应的高速缓存的冲突。</li>
 <li>schedule实现工作量的划分与调度。<br><br>基础语法：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schedule(<span class="built_in">type</span>[,size])</span><br></pre></td></tr></table></figure>
 type：指调度类型，常用的有静态调度static，动态调度dynamic，指导性调度guided，运行调度runtime。<br><br>size：表示每次调度的迭代数量，必须为整数（当type类型为runtime时，不能使用该参数）</li>
-<li>静态调度<br><br>将所有的循环迭代划分为大小相等的块，或在循环迭代次数不能整除线程数量与块大小的乘积时划分尽可能大小相等的块。若没有指定块的大小，迭代的划分将尽可能均匀，从而使的每个线程都能分到一块。<br><br><img src="/img_2.png" alt="img_2.png"><br>解析：第一块是将线程0和1平均分配，先0先运行完，再运行1；第二块则是0先运行完2个，1再2个，依次循环。</li>
-<li>动态调度<br><img src="/img_3.png" alt="img_3.png"></li>
-<li>指导性调度<br><img src="/img_4.png" alt="img_4.png"></li>
-<li>运行调度<br><img src="/img_5.png" alt="img_5.png"></li>
+<li>静态调度<br><br>将所有的循环迭代划分为大小相等的块，或在循环迭代次数不能整除线程数量与块大小的乘积时划分尽可能大小相等的块。若没有指定块的大小，迭代的划分将尽可能均匀，从而使的每个线程都能分到一块。<br><br><img src="https://i.postimg.cc/qR854W2F/img-2.png"><br>解析：第一块是将线程0和1平均分配，先0先运行完，再运行1；第二块则是0先运行完2个，1再2个，依次循环。</li>
+<li>动态调度<br><img src="https://i.postimg.cc/XJ0sHxtk/img-3.png"></li>
+<li>指导性调度<br><img src="https://i.postimg.cc/NGDdD6DR/img-4.png"></li>
+<li>运行调度<br><img src="https://i.postimg.cc/zXP0Zq9B/img-5.png" alt="img_5.png"></li>
 </ol>
-<h2 id="四、调度选择"><a href="#四、调度选择" class="headerlink" title="四、调度选择"></a>四、调度选择</h2><h3 id="（如何选择更好的调度方式提升性能）"><a href="#（如何选择更好的调度方式提升性能）" class="headerlink" title="（如何选择更好的调度方式提升性能）"></a>（如何选择更好的调度方式提升性能）</h3><p><img src="/img_6.png" alt="img_6.png"></p>
+<h2 id="四、调度选择"><a href="#四、调度选择" class="headerlink" title="四、调度选择"></a>四、调度选择</h2><h3 id="（如何选择更好的调度方式提升性能）"><a href="#（如何选择更好的调度方式提升性能）" class="headerlink" title="（如何选择更好的调度方式提升性能）"></a>（如何选择更好的调度方式提升性能）</h3><p><img src="https://i.postimg.cc/pLhkPgHB/img-6.png" alt="img_6.png"></p>
 <h2 id="五、同步"><a href="#五、同步" class="headerlink" title="五、同步"></a>五、同步</h2><h3 id="（互斥锁同步和事件同步）"><a href="#（互斥锁同步和事件同步）" class="headerlink" title="（互斥锁同步和事件同步）"></a>（互斥锁同步和事件同步）</h3><ol>
-<li>同步的原因<br><img src="/img_7.png" alt="img_7.png"></li>
-<li>同步<br><img src="/img_8.png" alt="img_8.png"></li>
-<li>锁操作<br><img src="/img_9.png" alt="img_9.png"></li>
-<li>时间同步机制<br><img src="/img_10.png" alt="img_10.png"><br>主线程分配队列数组后，可以使用parallel指令开始执行线程，每个线程可以为自己的队列分配存储空间。</li>
+<li>同步的原因<br><img src="https://i.postimg.cc/L8cD5N4F/img-7.png" alt="img_7.png"></li>
+<li>同步<br><img src="https://i.postimg.cc/gjtqWKt5/img-8.png" alt="img_8.png"></li>
+<li>锁操作<br><img src="https://i.postimg.cc/85HmyGRT/img-9.png" alt="img_9.png"></li>
+<li>时间同步机制<br><img src="https://i.postimg.cc/V61FBvb7/img-10.png" alt="img_10.png"><br>主线程分配队列数组后，可以使用parallel指令开始执行线程，每个线程可以为自己的队列分配存储空间。</li>
 </ol>
 <h2 id="六、临界区和锁"><a href="#六、临界区和锁" class="headerlink" title="六、临界区和锁"></a>六、临界区和锁</h2><h3 id="（熟悉barrier、critical、atomic的使用）"><a href="#（熟悉barrier、critical、atomic的使用）" class="headerlink" title="（熟悉barrier、critical、atomic的使用）"></a>（熟悉barrier、critical、atomic的使用）</h3><ol>
-<li>同步barrier<br><img src="/img_11.png" alt="img_11.png"></li>
-<li>同步critical<br><img src="/img_12.png" alt="img_12.png"><br><img src="/img_13.png" alt="img_13.png"><br><img src="/img_14.png" alt="img_14.png"></li>
-<li>指令atomic<br><img src="/img_15.png" alt="img_15.png"></li>
+<li>同步barrier<br><img src="https://i.postimg.cc/mkgNJnjC/img-11.png" alt="img_11.png"></li>
+<li>同步critical<br><img src="https://i.postimg.cc/43p59Vn7/img-12.png" alt="img_12.png"><br><img src="https://i.postimg.cc/v80vfQ8z/img-13.png" alt="img_13.png"><br><img src="https://i.postimg.cc/bNd9RKsj/img-14.png" alt="img_14.png"></li>
+<li>指令atomic<br><img src="https://i.postimg.cc/LsFk25vH/img-15.png" alt="img_15.png"></li>
 </ol>
-<h2 id="七、指令critic、atomic和锁的比较"><a href="#七、指令critic、atomic和锁的比较" class="headerlink" title="七、指令critic、atomic和锁的比较"></a>七、指令critic、atomic和锁的比较</h2><p><img src="/img_16.png" alt="img_16.png"><br><img src="/img_17.png" alt="img_17.png"></p>
-
+<h2 id="七、指令critic、atomic和锁的比较"><a href="#七、指令critic、atomic和锁的比较" class="headerlink" title="七、指令critic、atomic和锁的比较"></a>七、指令critic、atomic和锁的比较</h2><p><img src="https://i.postimg.cc/jS76pPHg/img-16.png" alt="img_16.png"><br><img src="https://i.postimg.cc/RV8QpXHJ/img-17.png" alt="img_17.png"></p>
+<h1 id="图片建议复制链接打开查看！！！"><a href="#图片建议复制链接打开查看！！！" class="headerlink" title="图片建议复制链接打开查看！！！"></a>图片建议复制链接打开查看！！！</h1>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/07/24/OpenMP1/" data-id="clkgmhn7b0000b0ja5nsk35vp" data-title="并行程序设计导论|OpenMP实例演示&amp;调度策略&amp;数据安全" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2023/07/24/OpenMP1/" data-id="clkgmzzoz0000ssja0prd14b0" data-title="并行程序设计导论|OpenMP实例演示&amp;调度策略&amp;数据安全" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
