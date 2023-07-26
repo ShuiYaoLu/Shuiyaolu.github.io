@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>CPU读写内存的方式 | ShuiYaolu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="资料参考知乎Q1：谁来告诉CPU去读写内存？A：是程序员，更具体的是编译器，CPU只是按照指令按部就班的执行。 Q2：机器指令从哪里来的呢？A：编译器生成，程序员通过高级语言编写程序，编译器将其翻译为机器指令，机器指令来告诉CPU去读写内存。 Q3：介绍两种内存读写CPU读写内存其实是由两个因素来驱动的：  程序执行过程中需要读写来自内存中的数据 CPU需要访问内存读取下一条要执行的机器指令  程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CPU读写内存的方式">
+<meta property="og:url" content="http://example.com/2023/07/26/1/index.html">
+<meta property="og:site_name" content="ShuiYaolu">
+<meta property="og:description" content="资料参考知乎Q1：谁来告诉CPU去读写内存？A：是程序员，更具体的是编译器，CPU只是按照指令按部就班的执行。 Q2：机器指令从哪里来的呢？A：编译器生成，程序员通过高级语言编写程序，编译器将其翻译为机器指令，机器指令来告诉CPU去读写内存。 Q3：介绍两种内存读写CPU读写内存其实是由两个因素来驱动的：  程序执行过程中需要读写来自内存中的数据 CPU需要访问内存读取下一条要执行的机器指令  程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-711c627a80b8a60576f249904074f890_1440w.webp">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-d0088e93684296103550bdc714845beb_1440w.webp">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-c201f2a579719b9b0448e10c27178ded_1440w.webp">
+<meta property="article:published_time" content="2023-07-26T05:23:45.000Z">
+<meta property="article:modified_time" content="2023-07-26T05:57:47.981Z">
+<meta property="article:author" content="ShuiYaolu">
+<meta property="article:tag" content="计算机组成原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic1.zhimg.com/80/v2-711c627a80b8a60576f249904074f890_1440w.webp">
+  
+    <link rel="alternate" href="/atom.xml" title="ShuiYaolu" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ShuiYaolu</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">注意！她的脑婆叫小左！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/26/1/" class="article-date">
+  <time class="dt-published" datetime="2023-07-26T05:23:45.000Z" itemprop="datePublished">2023-07-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      CPU读写内存的方式
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="资料参考知乎"><a href="#资料参考知乎" class="headerlink" title="资料参考知乎"></a>资料参考知乎</h2><h3 id="Q1：谁来告诉CPU去读写内存？"><a href="#Q1：谁来告诉CPU去读写内存？" class="headerlink" title="Q1：谁来告诉CPU去读写内存？"></a>Q1：谁来告诉CPU去读写内存？</h3><p>A：是程序员，更具体的是编译器，CPU只是按照指令按部就班的执行。</p>
+<h3 id="Q2：机器指令从哪里来的呢？"><a href="#Q2：机器指令从哪里来的呢？" class="headerlink" title="Q2：机器指令从哪里来的呢？"></a>Q2：机器指令从哪里来的呢？</h3><p>A：编译器生成，程序员通过高级语言编写程序，编译器将其翻译为机器指令，机器指令来告诉CPU去读写内存。</p>
+<h3 id="Q3：介绍两种内存读写"><a href="#Q3：介绍两种内存读写" class="headerlink" title="Q3：介绍两种内存读写"></a>Q3：介绍两种内存读写</h3><p>CPU读写内存其实是由两个因素来驱动的：</p>
+<ol>
+<li>程序执行过程中需要读写来自内存中的数据</li>
+<li>CPU需要访问内存读取下一条要执行的机器指令</li>
+</ol>
+<p>程序局部性原理：</p>
+<ol>
+<li>时间局部性：如果我们访问内存中的一个数据A，那么很有可能接下来再次访问到，这叫做时间局部性。</li>
+<li>空间局部性：如果我们访问内存中的一个数据A，同时还很有可能访问与数据A相邻的数据B。</li>
+</ol>
+<p>为什么要使用缓存：</p>
+<ol>
+<li>某程序占据的内存空间只有一少部分在程序执行过程经常用到，我们可以通过缓存将他们集中起来。</li>
+<li>缓存的读写速度更快，我们把经常用到的数据放到cache中存储，CPU访问内存时首先查找cache，如果命中，那么就省时，直接返回即可，找不到再去查找内存并更新cache。有了cache，CPU不再直接与内存打交道了。</li>
+<li>cache的容量不会很大，且由于程序局部性原理，此很小的cache能有很高的命中率，从而带来性能的极大提升。</li>
+</ol>
+<p>缓存更新方式：</p>
+<ol>
+<li>同步缓存更新： 首先需要把该数据从内存加载到cache中，然后更新cache，再然后更新内存。<br><img src="https://pic1.zhimg.com/80/v2-711c627a80b8a60576f249904074f890_1440w.webp"><br>存在的问题：写内存就不得不访问内存，从而性能降低。</li>
+<li>异步更新缓存：当CPU写内存时，直接更新cache，更新完cache后CPU就可以认为写内存的操作已经完成了，此时内存中保存的还是旧数据。当包含该数据的cache块被剔除时再更新到内存中，这样CPU更新cache与更新内存就解耦了，CPU更新cache后不再等待内存更新。<br><img src="https://pic4.zhimg.com/80/v2-d0088e93684296103550bdc714845beb_1440w.webp"></li>
+</ol>
+<h3 id="多级cache"><a href="#多级cache" class="headerlink" title="多级cache"></a>多级cache</h3><p>现代CPU为了增加CPU读写内存性能，已经在CPU和内存之间增加了多级cache，典型的有三级，L1、L2和L3，CPU读内存时首先从L1 cache找起，能找到直接返回，否则就要在L2 cache中找，L2 cache中找不到就要到L3 cache中找，还找不到就不得不访问内存了。现代计算机系统CPU和内存之间其实是有一个cache的层级结构的。<br><img src="https://pic2.zhimg.com/80/v2-c201f2a579719b9b0448e10c27178ded_1440w.webp"></p>
+<h3 id="虚拟内存地址"><a href="#虚拟内存地址" class="headerlink" title="虚拟内存地址"></a>虚拟内存地址</h3><p>CPU执行机器指令时，指令指示CPU从内存地址A中取出数据，然后CPU执行机器指令时下发命令：“给我从地址A中取出数据”，尽管真的能从地址A中取出数据，但这个地址A不是真的，不是真的，不是真的。因为这个地址A属于虚拟内存，也就是那个“假的地址空间”，现代CPU内部有一个叫做MMU的模块将这假的地址A转换为真的地址B，将地址A转换为真实的地址B之后才是本文之前讲述的关于cache的那一部分。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/26/1/" data-id="clkjbdwtx00006oja5dmccrnt" data-title="CPU读写内存的方式" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">计算机组成原理</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/07/24/OOO1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">OpenMP实例演示&amp;调度策略&amp;数据安全</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E8%A1%8C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AF%BC%E8%AE%BA/" rel="tag">并行程序设计导论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">计算机组成原理</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%B9%B6%E8%A1%8C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AF%BC%E8%AE%BA/" style="font-size: 20px;">并行程序设计导论</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" style="font-size: 10px;">计算机组成原理</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/07/26/1/">CPU读写内存的方式</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/24/OOO1/">OpenMP实例演示&amp;调度策略&amp;数据安全</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/23/%E5%B9%B6%E8%A1%8C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AF%BC%E8%AE%BA-OpenMP/">OpenMP在并行构造中的运用</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/23/%E7%9B%AE%E5%BD%95/">目录</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 ShuiYaolu<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
